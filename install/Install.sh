@@ -20,4 +20,4 @@ wget http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
 tar xzvf LCD*.tar.gz
 cd ./LCD-show/
 chmod +x LCD4-show
-./LCD4-show
+#./LCD4-show

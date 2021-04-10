@@ -24,17 +24,17 @@ class MainWindow(QMainWindow):
     serial_flowcontrol = (['None','RTS/CTS']) #[off rtscts]
 
     # ublox command file for Base/Rover mode
-    ubxcmd = dirtrs+'/conf/ubx_m8t_bds_raw_1hz.cmd'
+    ubxcmd = dirtrs+'/conf/m8t_1hz_demo5_github.cmd'
 
     # Default Base position configuration
     basepos_type = (['LLH','RTCM']) # for Rover
     basepos_itype = 1 # for Rover
-    basepos_lat = '35.0'
-    basepos_lon = '139.0'
-    basepos_hgt = '50.0'
+    basepos_lat = '18.468364646'
+    basepos_lon = '-69.910027967'
+    basepos_hgt = '24.898625044'
 
     # Default Input stream configration
-    input_iport= 2         # ttyACM0
+    input_iport = 2         # ttyACM0
     input_ibitrate = 9     # 115200 bps
     input_ibytesize = 1    # 8 bit
     input_iparity = 0      # None
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
     corr2_flag = False
     corr2_format = (['RTCM2','RTCM3','BINEX','UBX'])
     corr2_iformat = 3
-    corr2_iport= 4         # ttyUSB0
+    corr2_iport = 4         # ttyUSB0
     corr2_ibitrate = 9     # 115200 bps
     corr2_ibytesize = 1    # 8 bit
     corr2_iparity = 0      # None
@@ -75,21 +75,21 @@ class MainWindow(QMainWindow):
 
     # Default Output stream configration
     output_flag = False
-    output_type=(['TCP Server','NTRIP Server','NTRIP Caster'])
-    output_itype = 0    # TCP Server
+    output_type = (['TCP Server','NTRIP Server','NTRIP Caster'])
+    output_itype = 0
     output_format = (['UBX','RTCM3'])
     output_iformat = 0  # UBX
-    output_user = 'user'
-    output_addr = 'test.net'
-    output_port = '2101'
-    output_pw = 'password'
-    output_mp = 'TRS'
+    output_user = ''
+    output_addr = ''
+    output_port = ''
+    output_pw = ''
+    output_mp = ''
 
     # Default Output(Serial) stream configration
     output2_flag = False
     output2_format = (['UBX','RTCM3'])
     output2_iformat = 0      # UBX
-    output2_iport= 4         # ttyUSB0
+    output2_iport = 4         # ttyUSB0
     output2_ibitrate = 9     # 115200 bps
     output2_ibytesize = 1    # 8 bit
     output2_iparity = 0      # None
@@ -111,7 +111,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         # self.setGeometry(100, 100, 480, 320) # For debug
-        self.showFullScreen()
+        # self.showFullScreen()
 
         self.show()
 
@@ -442,7 +442,7 @@ class MainWidget(QWidget):
             exe = MainWindow.dirrtk+'/RTKLIB/app/str2str/gcc/str2str'
             rcvcmd =' -c '+MainWindow.ubxcmd
             llhcmd =' -p '+MainWindow.basepos_lat+' '+MainWindow.basepos_lon+' '+MainWindow.basepos_hgt
-            rtcmcmd=' -msg 1006(10),1004,1019'
+            rtcmcmd=' -msg 1006(10),1004,1019,1074,1084,1094,1124'
             opt = self.makeCommandBase()
             cmd = shlex.split(exe+opt+rcvcmd+llhcmd+rtcmcmd)
             main.p = Popen(cmd, stdin=PIPE, stderr=PIPE, bufsize=0)
@@ -648,7 +648,7 @@ class RoverConfigWindow:
         self.w.setFont(QFont('Helvetica',11))
 
         self.w.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.w.setGeometry(0, 0, 480, 320)
+        self.w.setGeometry(0, 0, 480, 300)
 
         self.parent = parent
 
@@ -729,7 +729,7 @@ class BaseConfigWindow:
         self.w.setFont(QFont('Helvetica',11))
 
         self.w.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.w.setGeometry(0, 0, 480, 320)
+        self.w.setGeometry(0, 0, 480, 300)
 
         self.parent = parent
 
