@@ -80,7 +80,7 @@ do
         "RTK Base a telemetría")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
-            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd1hz/g" $rutainstancia
             sed -i "s/output2_flag = .*$/output2_flag = $output2_flag/g" $rutainstancia
             sed -i "s/output2_ibitrate = .*$/output2_ibitrate = $output2_ibitrate/g" $rutainstancia
             sed -i "s/output2_iformat = .*$/output2_iformat = $output2_iformat/g" $rutainstancia
