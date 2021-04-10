@@ -52,8 +52,8 @@ rm -f $file
 # Calcular puntuaciones z y promedios finales
 foo=`grep -n '%  GPST' $tmp_dir/$pos | cut -f1 -d:`
 linea=`echo $foo | awk '{print $1+1}'`
-foo_mean_sd=`tail -n +$linea $tmp_dir/$pos | awk '{sum += $3; sumsq += ($3)^2}\
-  END {printf "%.9f %.9f \n", sum/NR, sqrt((sumsq-sum^2/NR)/(NR-1))}'`
+foo_mean_sd=`tail -n +$linea $tmp_dir/$pos | awk '{sum += int($3); sumsq += int(($3)^2)}\
+  END {printf "%.20f %.20f \n", sum/NR, sqrt((sumsq-sum^2/NR)/(NR-1))}'`
 foo_mean=`echo $foo_mean_sd | awk '{print $1}'`
 foo_sd=`echo $foo_mean_sd | awk '{print $2}'`
 tail -n +$linea $tmp_dir/$pos |\
