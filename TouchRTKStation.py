@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
     serial_flowcontrol = (['None','RTS/CTS']) #[off rtscts]
 
     # ublox command file for Base/Rover mode
-    ubxcmd = dirtrs+'/conf/m8t_1hz_demo5_github.cmd'
+    ubxcmd = dirtrs+'/conf/ubx_m8t_bds_raw_1hz.cmd'
 
     # Default Base position configuration
     basepos_type = (['LLH','RTCM']) # for Rover

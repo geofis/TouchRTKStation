@@ -6,6 +6,10 @@ rutascript=/home/pi/TouchRTKStation/TouchRTKStation.py
 rutainstancia=$(mktemp -t instance_$(date +%Y-%m-%d-%H-%M-%S)-XXXX.py --tmpdir=/home/pi/TouchRTKStation)
 rutacredenciales=/home/pi/credenciales
 
+# cmd
+cmd1hz=m8t_1hz_demo5_github.cmd
+cmd5hz=m8t_5hz_demo5_github.cmd
+
 # Para RTK Base a rtk2go
 output_flag=True
 output_itype=1
@@ -62,6 +66,7 @@ do
         "RTK Base a rtk2go")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd1hz/g" $rutainstancia
             sed -i "s/output_flag = .*$/output_flag = $output_flag/g" $rutainstancia
             sed -i "s/output_itype = .*$/output_itype = $output_itype/g" $rutainstancia
             sed -i "s/output_user = .*$/output_user = '$output_user'/g" $rutainstancia
@@ -75,6 +80,7 @@ do
         "RTK Base a telemetría")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/output2_flag = .*$/output2_flag = $output2_flag/g" $rutainstancia
             sed -i "s/output2_ibitrate = .*$/output2_ibitrate = $output2_ibitrate/g" $rutainstancia
             sed -i "s/output2_iformat = .*$/output2_iformat = $output2_iformat/g" $rutainstancia
@@ -85,6 +91,7 @@ do
         "RTK Base a telemetría y rtk2go")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd1hz/g" $rutainstancia
             sed -i "s/output_flag = .*$/output_flag = $output_flag/g" $rutainstancia
             sed -i "s/output_itype = .*$/output_itype = $output_itype/g" $rutainstancia
             sed -i "s/output_user = .*$/output_user = '$output_user'/g" $rutainstancia
@@ -102,6 +109,7 @@ do
         "RTK Rover correcciones desde UNAVCO")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_unavco/g" $rutainstancia
             sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_unavco/g" $rutainstancia
             sed -i "s/corr_user = .*$/corr_user = '$corr_user_unavco'/g" $rutainstancia
@@ -115,6 +123,7 @@ do
         "RTK Rover correcciones desde rtk2go")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_rtk2go/g" $rutainstancia
             sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_rtk2go/g" $rutainstancia
             sed -i "s/corr_user = .*$/corr_user = '$corr_user_rtk2go'/g" $rutainstancia
@@ -128,6 +137,7 @@ do
         "RTK Rover correcciones desde rtk2go ENU")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_rtk2go/g" $rutainstancia
             sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_rtk2go/g" $rutainstancia
             sed -i "s/corr_user = .*$/corr_user = '$corr_user_rtk2go'/g" $rutainstancia
@@ -143,6 +153,7 @@ do
         "RTK Rover correcciones desde telemetría")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr2_flag = .*$/corr2_flag = $corr2_flag/g" $rutainstancia
             sed -i "s/corr2_iformat = .*$/corr2_iformat = $corr2_iformat/g" $rutainstancia
             sed -i "s/corr2_iport = .*$/corr2_iport = $corr2_iport/g" $rutainstancia
@@ -153,6 +164,7 @@ do
         "RTK Rover correcciones desde telemetría ENU")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr2_flag = .*$/corr2_flag = $corr2_flag/g" $rutainstancia
             sed -i "s/corr2_iformat = .*$/corr2_iformat = $corr2_iformat/g" $rutainstancia
             sed -i "s/corr2_iport = .*$/corr2_iport = $corr2_iport/g" $rutainstancia
