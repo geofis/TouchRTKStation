@@ -20,10 +20,10 @@ output_pw=`grep -oP 'output_pw=\K\w+' $rutacredenciales`
 output_mp=geofis_ovni
 
 # Para RTK Base a telemetría
-output2_ibitrate=8
 output2_flag=True
-output2_iformat=0
+output2_iformat=1
 output2_iport=4
+output2_ibitrate=9
 
 # Para RTK Rover correcciones desde UNAVCO
 corr_flag_unavco=True
@@ -45,9 +45,9 @@ corr_mp_rtk2go=$output_mp
 
 # Para RTK Rover correcciones desde telemetría
 corr2_flag=True
-corr2_iformat=3
+corr2_iformat=$output2_iformat
 corr2_iport=0
-corr2_ibitrate=8
+corr2_ibitrate=$output2_ibitrate
 
 # ENU para static
 optfile_enu='static_enu.conf'

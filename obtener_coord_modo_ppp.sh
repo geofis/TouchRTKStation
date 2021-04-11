@@ -1,5 +1,5 @@
 #!/bin/bash
-read -p "Fuente de datos [1:base rtk2go;2:antena local]: " fuentedatos
+read -p "Fuente de datos [1:base-rtk2go;2:base-telemetría;3:antena local]: " fuentedatos
 fuentedatos=${fuentedatos:-1}
 read -p "Tiempo (en segundos) de colecta de coordenadas [por defecto, 300]: " tiempo
 tiempo=${tiempo:-300}
@@ -7,7 +7,7 @@ tmp_dir=$(mktemp -d -t $(date +%Y-%m-%d-%H-%M-%S)-XXXX --tmpdir=/home/pi/bases)
 chmod g+rx,o+rx $tmp_dir
 echo "Las observaciones en bruto tomadas durante $tiempo segundos en modo single, se utilizarán para calcular solución PPP y se guardarán aquí:" $tmp_dir
 
-ubx=raw.ubx
+raw=raw
 pos=out.pos
 pos_no=out_no.pos
 pro=promedio.csv
@@ -30,21 +30,26 @@ progress &
 
 if [ $fuentedatos -eq 1 ]
 then
-  # Abrir stream desde base en rtk2go.com, enviarlo a UBX
+  # Abrir stream desde base en rtk2go.com, guardarlo en UBX
   echo "Tomando datos de base rtk2go"
-  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -in ntrip://user:$rtk2gopw@rtk2go.com:2101/geofis_ovni -out file://$tmp_dir/$ubx 
+  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -in ntrip://user:$rtk2gopw@rtk2go.com:2101/geofis_ovni -out file://$tmp_dir/$raw.ubx
+elif [ $fuentedatos -eq 2 ]
+then
+  # Abrir stream desde base con telemetría, guardarlo en RTCM3
+  echo "Tomando datos de base telemetría"
+  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -in serial://serial0:115200:8:n:1:off#rtcm3 -out file://$tmp_dir/$raw.rtcm3
 else
-  # Abrir stream desde receptor, enviarlo a UBX
+  # Abrir stream desde receptor local (normalmente, el rover), guardarlo en UBX
   echo "Tomando datos de antena local"
-  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -c /home/pi/TouchRTKStation/conf/m8t_5hz_usb.cmd -in serial://ttyACM0:115200:8:n:1:off#ubx -out file://$tmp_dir/$ubx
+  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -c /home/pi/TouchRTKStation/conf/m8t_5hz_usb.cmd -in serial://ttyACM0:115200:8:n:1:off#ubx -out file://$tmp_dir/$raw.ubx
 fi
 
 # Convertir binario en RINEX
-convbin $tmp_dir/$ubx
+convbin $tmp_dir/$raw*
 
-# Calcular solución en modo single
-rnx2rtkp -k /home/pi/TouchRTKStation/conf/ppp_static.conf $tmp_dir/${ubx/ubx/}* -o $tmp_dir/$pos
-#rnx2rtkp -k /home/pi/TouchRTKStation/conf/single.conf $tmp_dir/${ubx/ubx/}* -o $tmp_dir/$pos
+# Calcular solución
+rnx2rtkp -k /home/pi/TouchRTKStation/conf/ppp_static.conf $tmp_dir/$raw* -o $tmp_dir/$pos
+#rnx2rtkp -k /home/pi/TouchRTKStation/conf/single.conf $tmp_dir/$raw* -o $tmp_dir/$pos
 
 # Borrar archivo temporizador
 rm -f $file
