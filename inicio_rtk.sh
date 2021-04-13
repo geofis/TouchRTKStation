@@ -26,6 +26,7 @@ output2_iport=4
 output2_ibitrate=9
 
 # Para RTK Rover correcciones desde UNAVCO
+basepos_itype_unavco=1
 corr_flag_unavco=True
 corr_iformat_unavco=1
 corr_user_unavco=`grep -oP 'corr_user_unavco=\K\w+' $rutacredenciales`
@@ -109,6 +110,7 @@ do
         "RTK Rover correcciones desde UNAVCO")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/basepos_itype = .*$/basepos_itype = $basepos_itype_unavco/g" $rutainstancia
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_unavco/g" $rutainstancia
             sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_unavco/g" $rutainstancia

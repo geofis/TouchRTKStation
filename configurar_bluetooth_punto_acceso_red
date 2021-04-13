@@ -1,0 +1,51 @@
+# Referencia de:
+# How To Remotely Access The Raspberry Pi Via Bluetooth (SSH/VNC)
+# https://www.youtube.com/watch?v=zumnEOAk9aI
+# IMPORTANTE: el vídeo no explica que hay que configurar el dhcp primero.
+# De no hacerlo, se pierde la conectividad con la RPi.
+
+# 1) En /etc/dhcpcd.conf, añadir esto al final
+# (nota: usar el ip raíz que corresponda; en static ip_address se coloca el ip fijo de la RPi)
+
+interface eth0
+static ip_address=192.168.1.53/24
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
+
+interface wlan0
+static ip_address=192.168.1.33/24
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
+
+# 2) Verificar wpa_supplicant 
+# Normalmente, ya se encuentra debidamente configurado, pero verificar tres primeras líneas siguientes y la red:
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=DO
+
+network={
+        ssid="NOMBREDELARED"
+        psk="PASSWORDDELARED"
+        key_mgmt=WPA-PSK
+}
+
+# 3) Instalar el gestor de red de gnome y blueman
+sudo apt install network-manager-gnome blueman
+
+# 4) Reboot
+
+# 5) Configurar punto de acceso bluetooth. En ícono de bluetooth (el que crea blueman, de fondo azul),
+# presionar "Local services", luego "Network Access Point (NAP)" y escribir un dnsmasq, por ejemplo 10.1.1.1
+# En "Pan Support" marcar "Blueman (dhclient)" y en "DUN Support" marcar "Blueman".
+# Presionar "Apply" (podría no estar activo el botón si no escribe un dnsmasq).
+
+# 7) Parear.
+# En el ícono de bluetooth (de nuevo, el de fondo azul), presionar "Devices".
+# Hacer search. Seleccionar el teléfono, y presionar "Setup". Si está pareado, saltar a Connect, de lo contrario, ir a Pairing.
+# En "Connect" y al grupo "Connect"  y en el grupo "Connect to:" elegir "Network Access Point".
+
+# 8) En el teléfono, conectar con la RPi, o en la RPi conectar con el teléfono.
+
+# 9) Iniciar VNC, añadir la RPi si no lo está con la ruta 10.1.1.1
+
