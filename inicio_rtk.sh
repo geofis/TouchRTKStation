@@ -1,10 +1,15 @@
 #!/bin/bash
 # Bash Menu Script Example
 
+# Verificar archivo
+rutacredenciales=/home/pi/credenciales
+if [ ! -f "$rutacredenciales" ]; then
+    echo "Es necesario ejecutar el script crear_credenciales.sh"
+fi
+
 # Archivos
 rutascript=/home/pi/TouchRTKStation/TouchRTKStation.py
 rutainstancia=$(mktemp -t instance_$(date +%Y-%m-%d-%H-%M-%S)-XXXX.py --tmpdir=/home/pi/TouchRTKStation)
-rutacredenciales=/home/pi/credenciales
 
 # cmd
 cmd1hz=m8t_1hz_demo5_github.cmd
