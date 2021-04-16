@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Iniciar RTK
 Icon=preferences-system-search
-Exec=/home/pi/TouchRTKStation/inicio_rtk.sh
+Exec=/home/pi/TouchRTKStation/sh/inicio_rtk.sh
 Terminal=true
 Type=Application
 Categories=None;

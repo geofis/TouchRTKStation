@@ -3,7 +3,7 @@ read -p "Fuente de datos [1:base-rtk2go;2:base-telemetría;3:antena local]: " fu
 fuentedatos=${fuentedatos:-1}
 read -p "Tiempo (en segundos) de colecta de coordenadas [por defecto, 300]: " tiempo
 tiempo=${tiempo:-300}
-tmp_dir=$(mktemp -d -t $(date +%Y-%m-%d-%H-%M-%S)-XXXX --tmpdir=/home/pi/bases)
+tmp_dir=$(mktemp -d -t $(date +%Y-%m-%d-%H-%M-%S)-XXXX --tmpdir=/home/pi/TouchRTKStation/.bases)
 chmod g+rx,o+rx $tmp_dir
 echo "Las observaciones en bruto tomadas durante $tiempo segundos en modo single, se utilizarán para calcular solución PPP y se guardarán aquí:" $tmp_dir
 
@@ -12,8 +12,10 @@ pos=out.pos
 pos_no=out_no.pos
 pro=promedio.csv
 rutascript=/home/pi/TouchRTKStation/TouchRTKStation.py
-rutacredenciales=/home/pi/credenciales
-rtk2gopw=`grep -oP 'output_pw=\K\w+' $rutacredenciales`
+rutacredenciales=/home/pi/TouchRTKStation/.credenciales/credenciales
+#rtk2gopw=`grep -oP 'output_pw=\K\w+' $rutacredenciales`
+rtk2gopw=`if [ -f "$rutacredenciales" ]; then grep -oP 'output_pw=\K\w+' $rutacredenciales; fi`
+rtk2gomp=`if [ -f "$rutacredenciales" ]; then grep -oP 'mp_rtk2go=\K\w+' $rutacredenciales; fi`
 
 # Temporizador de tiempo transcurrido
 file=$(mktemp)
@@ -32,7 +34,7 @@ if [ $fuentedatos -eq 1 ]
 then
   # Abrir stream desde base en rtk2go.com, guardarlo en UBX
   echo "Tomando datos de base rtk2go"
-  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -in ntrip://user:$rtk2gopw@rtk2go.com:2101/geofis_ovni -out file://$tmp_dir/$raw.ubx
+  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -in ntrip://user:$rtk2gopw@rtk2go.com:2101/$rtk2gomp -out file://$tmp_dir/$raw.ubx
 elif [ $fuentedatos -eq 2 ]
 then
   # Abrir stream desde base con telemetría, guardarlo en RTCM3

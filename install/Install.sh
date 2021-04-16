@@ -13,13 +13,27 @@ apt-get install -y qt5-default pyqt5-dev pyqt5-dev-tools
 # Install RTKLIB
 git clone -b rtklib_2.4.3 https://github.com/tomojitakasu/RTKLIB.git
 
+# Detect architecture
+architecture=`uname -m`
+if [[ $architecture == *"arm"* ]]
+then
+  sed -i "s/F77      = gfortran/F77      = arm-linux-gnueabihf-gfortran/g" ./RTKLIB/lib/iers/gcc/makefile
+fi
+
+# Symlink app dir
 ln -s /home/pi/RTKLIB/app/consapp/* /home/pi/RTKLIB/app/
 
 cd ./RTKLIB/app/str2str/gcc/
 make
 cd ../../rtkrcv/gcc/
 make
-
+cd ../../convbin/gcc/
+make
+cd ../../../lib/iers/gcc
+make
+cd ../../../app/rnx2rtkp/gcc
+make
+mkdir /home/pi/TouchRTKStation/{.bases,.credenciales}
 cp -avr /home/pi/TouchRTKStation/install/shortcuts/* /home/pi/Desktop
 
 # Install LCD Driver. Uncomment if LCD is available
