@@ -3,7 +3,7 @@ read -p "Fuente de datos [1:base-rtk2go;2:base-telemetría;3:antena local]: " fu
 fuentedatos=${fuentedatos:-1}
 read -p "Tiempo (en segundos) de colecta de coordenadas [por defecto, 300]: " tiempo
 tiempo=${tiempo:-300}
-tmp_dir=$(mktemp -d -t $(date +%Y-%m-%d-%H-%M-%S)-XXXX --tmpdir=/home/pi/TouchRTKStation/.bases)
+tmp_dir=$(mktemp -d -t $(date +%Y-%m-%d-%H-%M-%S)-XXXX --tmpdir=/home/pi/TouchRTKStation/bases)
 chmod g+rx,o+rx $tmp_dir
 echo "Las observaciones en bruto tomadas durante $tiempo segundos en modo single, se utilizarán para calcular solución PPP y se guardarán aquí:" $tmp_dir
 
@@ -43,14 +43,14 @@ then
 else
   # Abrir stream desde receptor local (normalmente, el rover), guardarlo en UBX
   echo "Tomando datos de antena local"
-  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -c /home/pi/TouchRTKStation/conf/m8t_5hz_usb.cmd -in serial://ttyACM0:115200:8:n:1:off#ubx -out file://$tmp_dir/$raw.ubx
+  timeout --foreground ${tiempo}s /home/pi/RTKLIB/app/str2str/gcc/str2str -c /home/pi/TouchRTKStation/conf/m8t_1hz_demo5_github.cmd -in serial://ttyACM0:115200:8:n:1:off#ubx -out file://$tmp_dir/$raw.ubx
 fi
 
 # Convertir binario en RINEX
-convbin $tmp_dir/$raw*
+/home/pi/RTKLIB/app/convbin/gcc/convbin $tmp_dir/$raw*
 
 # Calcular solución
-rnx2rtkp -k /home/pi/TouchRTKStation/conf/ppp_static.conf $tmp_dir/$raw* -o $tmp_dir/$pos
+/home/pi/RTKLIB/app/rnx2rtkp/gcc/rnx2rtkp -k /home/pi/TouchRTKStation/conf/ppp_static.conf $tmp_dir/$raw* -o $tmp_dir/$pos
 #rnx2rtkp -k /home/pi/TouchRTKStation/conf/single.conf $tmp_dir/$raw* -o $tmp_dir/$pos
 
 # Borrar archivo temporizador

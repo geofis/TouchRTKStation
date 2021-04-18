@@ -27,6 +27,7 @@ fi
 # Symlink app dir
 ln -s /home/pi/RTKLIB/app/consapp/* /home/pi/RTKLIB/app/
 
+# Compile RTKLIB executables
 cd ./RTKLIB/app/str2str/gcc/
 make
 cd ../../rtkrcv/gcc/
@@ -37,7 +38,13 @@ cd ../../../lib/iers/gcc
 make
 cd ../../../app/rnx2rtkp/gcc
 make
-mkdir /home/pi/TouchRTKStation/{.bases,.credenciales}
+cd ../../pos2kml/gcc/
+make
+
+# Create directories for bases and credentials
+mkdir /home/pi/TouchRTKStation/{bases,.credenciales}
+
+# Copy shortcuts to desktop
 cp -avr /home/pi/TouchRTKStation/install/shortcuts/* /home/pi/Desktop
 
 # Install LCD Driver. Uncomment if LCD is available
