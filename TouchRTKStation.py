@@ -29,9 +29,9 @@ class MainWindow(QMainWindow):
     # Default Base position configuration
     basepos_type = (['LLH','RTCM']) # for Rover
     basepos_itype = 0
-    basepos_lat = '-nan'
-    basepos_lon = '-nan'
-    basepos_hgt = '-nan'
+    basepos_lat = '18.468013723'
+    basepos_lon = '-69.910281343'
+    basepos_hgt = '8.750487719'
 
     # Default Input stream configration
     input_iport = 2         # ttyACM0
