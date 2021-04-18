@@ -4,6 +4,9 @@ cd /home/pi/
 
 apt-get update -y
 
+# Install gfortran
+apt -y install gfortran
+
 # Install xterm
 apt -y install xterm
 
