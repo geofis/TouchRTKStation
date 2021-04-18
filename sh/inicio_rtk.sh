@@ -26,6 +26,7 @@ cmd5hz=m8t_5hz_demo5_github.cmd
 # Para RTK Base a rtk2go
 output_flag=True
 output_itype=1
+output_iformat=1
 output_user=user
 output_addr=rtk2go.com
 output_port=2101
@@ -49,8 +50,9 @@ corr_pw_unavco=`if [ -f "$rutacredenciales" ]; then grep -oP 'corr_pw_unavco=\K\
 corr_mp_unavco=`if [ -f "$rutacredenciales" ]; then grep -oP 'mp_unavco=\K\w+' $rutacredenciales; fi`
 
 # Para RTK Rover correcciones desde rtk2go
+basepos_itype_rtk2go=1
 corr_flag_rtk2go=True
-corr_iformat_rtk2go=3
+corr_iformat_rtk2go=1
 corr_user_rtk2go=$output_user
 corr_addr_rtk2go=$output_addr
 corr_port_rtk2go=$output_port
@@ -83,6 +85,7 @@ do
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd1hz/g" $rutainstancia
             sed -i "s/output_flag = .*$/output_flag = $output_flag/g" $rutainstancia
             sed -i "s/output_itype = .*$/output_itype = $output_itype/g" $rutainstancia
+            sed -i "s/output_iformat = .*$/output_iformat = $output_iformat/g" $rutainstancia
             sed -i "s/output_user = .*$/output_user = '$output_user'/g" $rutainstancia
             sed -i "s/output_addr = .*$/output_addr = '$output_addr'/g" $rutainstancia
             sed -i "s/output_port = .*$/output_port = '$output_port'/g" $rutainstancia
@@ -108,6 +111,7 @@ do
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd1hz/g" $rutainstancia
             sed -i "s/output_flag = .*$/output_flag = $output_flag/g" $rutainstancia
             sed -i "s/output_itype = .*$/output_itype = $output_itype/g" $rutainstancia
+            sed -i "s/output_iformat = .*$/output_iformat = $output_iformat/g" $rutainstancia
             sed -i "s/output_user = .*$/output_user = '$output_user'/g" $rutainstancia
             sed -i "s/output_addr = .*$/output_addr = '$output_addr'/g" $rutainstancia
             sed -i "s/output_port = .*$/output_port = '$output_port'/g" $rutainstancia
@@ -138,6 +142,7 @@ do
         "RTK Rover correcciones desde rtk2go")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/basepos_itype = .*$/basepos_itype = $basepos_itype_rtk2go/g" $rutainstancia
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_rtk2go/g" $rutainstancia
             sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_rtk2go/g" $rutainstancia
