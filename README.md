@@ -1,3 +1,89 @@
+---
+title: "TouchRTKStation GF <br> Sistema GNSS-RTK base-rover monobanda de bajo costo"
+author: Por José Ramón Martínez Batlle, Universidad Autónoma de Santo Domingo (UASD), jmartinez19@uasd.edu.do
+---
+
+> Bifurcado desde [aquí](https://github.com/taroz/TouchRTKStation) / Forked from [here](https://github.com/taroz/TouchRTKStation)
+
+## El problema y la solución
+
+La obtención de coordenadas precisas mediante la tecnología de posicionamiento "real time kinematic" (RTK), que explota la fase de la onda portadora emitida por sistemas de navegación global por satélite, o GNSS (e.g. GPS, GLONASS, entre otras constelaciones), se ha mantenido tradicionalmente fuera del alcance del público. Esto ha limitado su uso y enseñanza, especialmente en países de renta baja. Igualmente, su uso en investigación ha permanecido por años restringido a instituciones muy capitalizadas, capaces de pagar los costosos equipos (normalmente, de miles y decenas de miles de dólares) y el software privativo de procesamiento que ofrecían unas pocas empresas.
+
+La publicación de la biblioteca libre RTKLIB, el desarrollo de receptores de bajo costo, y el abaratamiento de PCs de placa pequeña, están revolucionando este sector. Existen varios proyectos en línea del tipo "hazlo tu mismo", la mayoría en inglés. Aquí resumo mi diseño, con el interés de difundirlo entre el público de habla hispana, con especial atención a estudiantes interesados.
+
+## Características del equipo
+
+- Soluciones RTK fijas de precisión centimétrica en tiempo real, errores estándar de orden milimétrico en PPK. Soluciones PPP para fijar la base en contextos inaccesibles.
+
+- Las correcciones se transmiten tanto en formato bruto (servidor NTRIP) o RTCM (telemetría).
+
+- Con arranque en frío, solución fija en no más de 1 min., en caliente sólo segundos, aunque
+  depende de múltiples factores, como la distancia y la conectividad a la base, entre otros.
+
+## Diseño elegido
+
+En cuanto a hardware, para la base implementé la propuesta de [Suzuki, T.; Takahashi, Y. (2019)](https://github.com/taroz/TouchRTKStation); para el rover, preferí un arreglo *headless*, inspirado en la propuesta de [Sky Horse Tech (2020)](https://www.youtube.com/watch?v=g92GboiOkeQ). En cuanto a software, todo es de código abierto; el *frontend* es una bifurcación [TouchRTKStation](https://github.com/geofis/TouchRTKStation), a la cual le incluí automatización de tareas comunes en bash y algunas mejoras en la interfaz PyQt; en el *backend* usé la implementación *demo5* de [Everett, T. (2021)](https://rtklibexplorer.wordpress.com/), la cual se basa en RTKLIB de [Takasu, T. (2013)](http://www.rtklib.com).
+
+![*Diseño elegido*](doc/diagrama.jpg)
+
+<br>
+
+![*El dúo sobre trípodes/palos y en funcionamiento*](doc/base-rover-mounted.jpg)
+
+<br>
+
+![*Captura de pantalla de la interfaz en funcionamiento. Este fix se logró en interiores, con base y rover localizados a cm de separación. Correcciones en formato RTCM vía rtk2go; mismo resultado por telemetría. Coordenadas ENU*](doc/gui-touchrtkstation-enu.png)
+
+<br>
+
+## Instalación
+
+1. Conecta la Raspberry Pi a Internet.
+
+2. Descarga TouchRTKStation  
+    `cd /home/pi/`  
+    `git clone https://github.com/geofis/TouchRTKStation.git`
+
+3. Si dispones de pantalla táctil de 4 pulgadas, quita los símbolos de comentario (`#`) a las líneas debajo de la sección `# Install LCD Driver. Uncomment if LCD is available` del archivo instalador localizado en `/home/pi/TouchRTKStation/install/Install.sh` (abrir con, por ejemplo, `nano`), tal como se muestra a continuación:
+
+    ```
+    # Install LCD Driver. Uncomment if LCD is available
+    cd /home/pi/
+    wget http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
+    tar xzvf LCD*.tar.gz
+    cd ./LCD-show/
+    chmod +x LCD4-show
+    ./LCD4-show
+    ```
+
+Si no dispones de pantalla, fija la resolución en 720x480 mediante `sudo raspi-config`, elige `Advanced Options>Resolution`, y continua en el paso 4.
+
+4. Instala TouchRTKStation y compila RTKLIB.
+    `cd /home/pi/TouchRTKStation/install`  
+    `sudo sh Install.sh`
+
+5. Ejecuta TouchRTKStation mediante el ícono `iniciar RTK` del Escritorio.
+
+6. Para salir de TouchRTKStation, clic-derecho (en pantalla táctil, este gesto equivale a "presionar y esperar"; en VNC Viewer desde el celular, tap con dos dedos y esperar), menú contextual, `Close Window`.
+
+7. Habilita SSH y VNC. Ejecuta `sudo raspi-config`, elige `Interfacing Options`,  luego `SSH` y finalmente `VNC`. Instala VNC Viewer en tu celular, identifica la IP de la Raspberry y configura una conexión. Configura la Raspberry para conectar usando Bluetooth siguiendo las instrucciones del archivo [`notas_para_configurar_bluetooth_punto_acceso_red`](install/notas_para_configurar_bluetooth_punto_acceso_red).
+
+## TO-DO list
+
+- Lista completa de partes + ensamblaje
+- Uso
+
+## Referencias
+
+- u-blox (2021): NEO/LEA-M8T. u-blox M8 concurrent GNSS timing modules. Data sheet.
+- Takasu, T. (2013). Rtklib. Disponible: http://www.rtklib.com
+- Suzuki, T.; Takahashi, Y. (2019): TouchRTKStation. Disponible: https://github.com/taroz/TouchRTKStation
+- Everett, T. (2021): rtklibexplorer. Disponible: https://rtklibexplorer.wordpress.com/
+- Sky Horse Tech (2020): How to setup ZED-F9P RTK Base and Rover. Disponible: https://www.youtube.com/watch?v=g92GboiOkeQ
+
+
+>*Original version of README from this line*
+
 # TouchRTKStation
 日本語で説明は[**こちら**](https://qiita.com/taroz/items/fe5373848153430bf19d)
 
