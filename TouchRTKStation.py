@@ -272,7 +272,7 @@ class MainWidget(QWidget):
         lLon_=QLabel('Ln/E:')
         lLon_.setAlignment(QtCore.Qt.AlignRight)
         self.lLon=QLabel('')
-        lAlt_=QLabel('Alt:')
+        lAlt_=QLabel('Al/U:')
         lAlt_.setAlignment(QtCore.Qt.AlignRight)
         self.lAlt=QLabel('')
         hbox2.addWidget(lSol_)
