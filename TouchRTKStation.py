@@ -122,15 +122,15 @@ class MainWindow(QMainWindow):
         if len(rawsol)>34:
             soltypes=re.findall(r'\(.*\)',rawsol)
             soltype=soltypes[0][1:-1].strip()
-            sols=re.findall(r'\d*\.\d*',rawsol)
+            sols=re.findall(r'[+-]?\d*\.\d*',rawsol)
 
             self.main_w.lSol.setText(soltype)
             if soltype=='SINGLE':
-                self.main_w.lSol.setStyleSheet('color: #ff0000; font-family: Helvetica; font-size: 11pt')
+                self.main_w.lSol.setStyleSheet('color: #ff0000; font-weight: bold; font-family: Helvetica; font-size: 11pt')
             if soltype=='FLOAT':
-                self.main_w.lSol.setStyleSheet('color: #ffd700; font-family: Helvetica; font-size: 11pt')
+                self.main_w.lSol.setStyleSheet('color: #ffa305; font-weight: bold; font-family: Helvetica; font-size: 11pt')
             if soltype=='FIX':
-                self.main_w.lSol.setStyleSheet('color: #008000; font-family: Helvetica; font-size: 11pt')
+                self.main_w.lSol.setStyleSheet('color: #008000; font-weight: bold; font-family: Helvetica; font-size: 11pt')
             self.main_w.lLat.setText(sols[1])
             self.main_w.lLon.setText(sols[2])
             self.main_w.lAlt.setText(sols[3])
@@ -266,10 +266,10 @@ class MainWidget(QWidget):
         lSol_=QLabel('Sol:')
         lSol_.setAlignment(QtCore.Qt.AlignRight)
         self.lSol=QLabel('')
-        lLat_=QLabel('Lat:')
+        lLat_=QLabel('Lt/N:')
         lLat_.setAlignment(QtCore.Qt.AlignRight)
         self.lLat=QLabel('')
-        lLon_=QLabel('Lon:')
+        lLon_=QLabel('Ln/E:')
         lLon_.setAlignment(QtCore.Qt.AlignRight)
         self.lLon=QLabel('')
         lAlt_=QLabel('Alt:')
