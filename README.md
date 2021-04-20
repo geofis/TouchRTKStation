@@ -39,7 +39,7 @@ En cuanto a hardware, para la base implementé la propuesta de [Suzuki, T.; Taka
 <br>
 
 ![](doc/gui-touchrtkstation-llh.jpg)<br>
-*Otra captura de pantalla de la interfaz, mostrando la interfaz recibiendo correcciones por telemetría.*
+*Otra captura de pantalla, la interfaz recibiendo correcciones por telemetría.*
 
 
 ## Instalación
