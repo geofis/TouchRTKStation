@@ -1,7 +1,6 @@
----
-title: "TouchRTKStation GF <br> Sistema GNSS-RTK base-rover monobanda de bajo costo"
-author: Por José Ramón Martínez Batlle, Universidad Autónoma de Santo Domingo (UASD), jmartinez19@uasd.edu.do
----
+# TouchRTKStation GF
+**Sistema GNSS-RTK base-rover monobanda de bajo costo** <br>
+*Por José Ramón Martínez Batlle, Universidad Autónoma de Santo Domingo (UASD), jmartinez19@uasd.edu.do*
 
 > Bifurcado desde [aquí](https://github.com/taroz/TouchRTKStation) / Forked from [here](https://github.com/taroz/TouchRTKStation)
 
@@ -24,17 +23,24 @@ La publicación de la biblioteca libre RTKLIB, el desarrollo de receptores de ba
 
 En cuanto a hardware, para la base implementé la propuesta de [Suzuki, T.; Takahashi, Y. (2019)](https://github.com/taroz/TouchRTKStation); para el rover, preferí un arreglo *headless*, inspirado en la propuesta de [Sky Horse Tech (2020)](https://www.youtube.com/watch?v=g92GboiOkeQ). En cuanto a software, todo es de código abierto; el *frontend* es una bifurcación [TouchRTKStation](https://github.com/geofis/TouchRTKStation), a la cual le incluí automatización de tareas comunes en bash y algunas mejoras en la interfaz PyQt; en el *backend* usé la implementación *demo5* de [Everett, T. (2021)](https://rtklibexplorer.wordpress.com/), la cual se basa en RTKLIB de [Takasu, T. (2013)](http://www.rtklib.com).
 
-![*Diseño elegido*](doc/diagrama.jpg)
+![](doc/diagrama.jpg)<br>
+*Diseño elegido*
 
 <br>
 
-![*El dúo sobre trípodes/palos y en funcionamiento*](doc/base-rover-mounted.jpg)
+![](doc/base-rover-mounted.jpg)<br>
+*El dúo sobre trípodes/palos y en funcionamiento*
 
 <br>
 
-![*Captura de pantalla de la interfaz en funcionamiento. Este fix se logró en interiores, con base y rover localizados a cm de separación. Correcciones en formato RTCM vía rtk2go; mismo resultado por telemetría. Coordenadas ENU*](doc/gui-touchrtkstation-enu.png)
+![](doc/gui-touchrtkstation-enu.png)<br>
+*Captura de pantalla de la interfaz en funcionamiento. Este fix se logró en interiores, con base y rover localizados a cm de separación. Correcciones en formato RTCM vía rtk2go; mismo resultado por telemetría. Coordenadas ENU*
 
 <br>
+
+![](doc/gui-touchrtkstation-llh.jpg)<br>
+*Otra captura de pantalla de la interfaz, mostrando la interfaz recibiendo correcciones por telemetría.*
+
 
 ## Instalación
 
