@@ -70,7 +70,7 @@ optfile_enu='static_enu.conf'
 
 # Menú
 PS3='Elige tu opción: '
-options=("Generar posición de la base" "RTK Base a rtk2go" "RTK Base a telemetría" "RTK Base a telemetría y rtk2go" "RTK Rover correcciones desde UNAVCO" "RTK Rover correcciones desde rtk2go" "RTK Rover correcciones desde rtk2go ENU" "RTK Rover correcciones desde telemetría" "RTK Rover correcciones desde telemetría ENU" "Crear credenciales" "Salir")
+options=("Generar posición de la base" "RTK Base a rtk2go" "RTK Base a telemetría" "RTK Base a telemetría y rtk2go" "RTK Rover correcciones desde UNAVCO" "RTK Rover correcciones desde rtk2go" "RTK Rover correcciones desde rtk2go ENU" "RTK Rover correcciones desde telemetría" "RTK Rover correcciones desde telemetría ENU" "Crear credenciales" "Fijar fecha/hora a partir de GPS" "Detener gpsd" "Salir")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -197,6 +197,16 @@ do
         "Crear credenciales")
             echo "Seleccionado: $opt"
             /home/pi/TouchRTKStation/sh/crear_credenciales.sh
+            break
+            ;;
+        "Fijar fecha/hora a partir de GPS")
+            echo "Seleccionado: $opt"
+            /home/pi/TouchRTKStation/sh/setclock.sh
+            break
+            ;;
+         "Detener gpsd")
+            echo "Seleccionado: $opt"
+            sudo killall gpsd
             break
             ;;
         "Salir")
