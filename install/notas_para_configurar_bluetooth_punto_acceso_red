@@ -16,7 +16,7 @@ interface eth0
 
 interface wlan0
 
-# Si por alguna razón fallase o se volviese inestable la conexión (cambios de IP por aleatorización de la MAC), diagnosticar con IP fija añadiendo las siguientes líneas debajo de "interface wlan0":
+# Si por alguna razón fallase o se volviese inestable la conexión (cambios de IP por aleatorización de la MAC), diagnosticar con IP fija añadiendo las siguientes líneas debajo de "interface wlan0" (no olvidar comentar estas líneas luego de diagnosticas):
 static ip_address=192.168.1.33/24
 static routers=192.168.1.1
 static domain_name_servers=192.168.1.1
@@ -46,6 +46,11 @@ sudo nano /etc/NetworkManager/NetworkManager.conf
 
 [device]
 wifi.scan-rand-mac-address=no
+
+# Añadir a pi al grupo bluetooth
+
+sudo usermod -G bluetooth -a pi
+
 
 # 5) Reboot
 
