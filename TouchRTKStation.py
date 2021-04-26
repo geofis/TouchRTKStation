@@ -3,6 +3,7 @@
 @author: Yusuke Takahashi, Taro Suzuki, Waseda University
 """
 import sys,os,shlex,glob,time,re
+import datetime
 from subprocess import Popen,PIPE,check_output
 from PyQt5.QtWidgets import (QWidget, QPushButton,QHBoxLayout, QVBoxLayout,QCheckBox,QGroupBox,QScrollArea,
  QApplication,QSizePolicy,QMainWindow,QMessageBox,QDialog,QTabWidget,QComboBox,QLabel,QLineEdit,QFormLayout,QGridLayout)
@@ -369,6 +370,8 @@ class MainWidget(QWidget):
     def startRoverToggled(self,checked):
         if checked:
             self.start_rov.setText('Stop')
+            starttime = datetime.datetime.now().strftime("%H:%M:%S")
+            self.start_rov.setText("Stop\n{}".format(starttime))
             self.mode_spp.setDisabled(True)
             self.mode_rtks.setDisabled(True)
             self.mode_rtkk.setDisabled(True)
@@ -437,6 +440,8 @@ class MainWidget(QWidget):
     def startBaseToggled(self,checked):
         if checked:
             self.start_base.setText('Stop')
+            starttime = datetime.datetime.now().strftime("%H:%M:%S")
+            self.start_base.setText("Stop\n{}".format(starttime))
             self.config_base.setDisabled(True)
             self.tabs.setTabEnabled(0, False)
             exe = MainWindow.dirrtk+'/RTKLIB/app/str2str/gcc/str2str'
