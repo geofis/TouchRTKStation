@@ -41,6 +41,9 @@ En cuanto a hardware, para la base implementé la propuesta de [Suzuki, T.; Taka
 ![](doc/gui-touchrtkstation-llh.jpg)<br>
 *Otra captura de pantalla, la interfaz recibiendo correcciones por telemetría.*
 
+![](doc/touchrtkstation-in-action-ff.gif)<br>
+*Animación de fix en interiores, correcciones desde rtk2go.*
+
 
 ## Instalación
 
