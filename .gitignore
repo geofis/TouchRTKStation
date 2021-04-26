@@ -1,6 +1,7 @@
 bases/*
 .credenciales/*
 .instance
+conf/.*
 *.pos
 *.ubx
 *.kml
