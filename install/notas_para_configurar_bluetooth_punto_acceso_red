@@ -1,25 +1,23 @@
-# Referencia de:
+# Referencia base de:
 # How To Remotely Access The Raspberry Pi Via Bluetooth (SSH/VNC)
 # https://www.youtube.com/watch?v=zumnEOAk9aI
 # IMPORTANTE: el vídeo no explica que hay que configurar el dhcp primero.
 # De no hacerlo, se pierde la conectividad con la RPi.
-
-# 0) Determinar dirección MAC de wlan0 antes de instalar NetworkManager
-ifconfig
-# La identificación "ether XX:XX...XX:XX" es la MAC
+# Para evitarlo, seguir las instrucciones de este gist: https://gist.github.com/jjsanderson/ab2407ab5fd07feb2bc5e681b14a537a
 
 # 1) En /etc/dhcpcd.conf, añadir esto al final
-# (nota: usar el ip raíz que corresponda; en static ip_address se coloca el ip fijo de la RPi)
 
+denyinterfaces wlan0
 
-interface eth0
+# Si el adaptador wlan0 estuviese configurado (por ejemplo con "interface wlan0" y líneas siguientes, comentar dichas líneas) 
 
+# Si por alguna razón fallase o se volviese inestable la conexión (cambios de IP por aleatorización de la MAC), diagnosticar con IP fija añadiendo las siguientes líneas debajo de "interface wlan0" (no olvidar comentar estas líneas luego de diagnosticar):
 interface wlan0
-
-# Si por alguna razón fallase o se volviese inestable la conexión (cambios de IP por aleatorización de la MAC), diagnosticar con IP fija añadiendo las siguientes líneas debajo de "interface wlan0" (no olvidar comentar estas líneas luego de diagnosticas):
 static ip_address=192.168.1.33/24
 static routers=192.168.1.1
 static domain_name_servers=192.168.1.1
+
+# (NOTA: esta configuración con IP fija y manejada por el DHCP, es incompatible con el Network Manager manejando el adaptador WiFi, por lo que sólo debe usarse para diagnosticar; al terminar, borrar o comentar dichas líneas)
 
 # 2) Verificar wpa_supplicant 
 # Normalmente, ya se encuentra debidamente configurado, pero verificar tres primeras líneas siguientes y la red:
@@ -42,19 +40,25 @@ sudo apt install network-manager-gnome blueman
 
 sudo nano /etc/NetworkManager/NetworkManager.conf
 
-# Añadir las siguientes dos líneas al final:
+# Verificar que estas líneas se encuentran en dicho archivo (añadir las que falten y/o eliminar las redundantes):
+
+[main]
+plugins=ifupdown,keyfile
+dhcp=internal
+
+[ifupdown]
+managed=true
 
 [device]
 wifi.scan-rand-mac-address=no
 
-# Añadir a pi al grupo bluetooth
+# 5) Añadir a pi al grupo bluetooth
 
 sudo usermod -G bluetooth -a pi
 
+# 6) Reboot
 
-# 5) Reboot
-
-# 6) Configurar punto de acceso bluetooth. En ícono de bluetooth (el que crea blueman, de fondo azul),
+# 7) Configurar punto de acceso bluetooth. En ícono de bluetooth (el que crea blueman, de fondo azul, segunda parte de vídeo https://www.youtube.com/watch?v=zumnEOAk9aI),
 # presionar "Local services", luego "Network Access Point (NAP)" y escribir un dnsmasq, por ejemplo 10.1.1.1
 # En "Pan Support" marcar "Blueman (dhclient)" y en "DUN Support" marcar "Blueman".
 # Presionar "Apply" (podría no estar activo el botón si no escribe un dnsmasq).
