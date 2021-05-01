@@ -60,6 +60,7 @@ corr_pw_rtk2go=$output_pw
 corr_mp_rtk2go=$output_mp
 
 # Para RTK Rover correcciones desde telemetría
+basepos_itype_tele=1
 corr2_flag=True
 corr2_iformat=$output2_iformat
 corr2_iport=0
@@ -157,6 +158,7 @@ do
         "RTK Rover correcciones desde rtk2go ENU")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/basepos_itype = .*$/basepos_itype = $basepos_itype_rtk2go/g" $rutainstancia
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_rtk2go/g" $rutainstancia
             sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_rtk2go/g" $rutainstancia
@@ -173,6 +175,7 @@ do
         "RTK Rover correcciones desde telemetría")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/basepos_itype = .*$/basepos_itype = $basepos_itype_tele/g" $rutainstancia
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr2_flag = .*$/corr2_flag = $corr2_flag/g" $rutainstancia
             sed -i "s/corr2_iformat = .*$/corr2_iformat = $corr2_iformat/g" $rutainstancia
@@ -184,6 +187,7 @@ do
         "RTK Rover correcciones desde telemetría ENU")
             echo "Seleccionado: $opt"
             cp $rutascript $rutainstancia
+            sed -i "s/basepos_itype = .*$/basepos_itype = $basepos_itype_tele/g" $rutainstancia
             sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
             sed -i "s/corr2_flag = .*$/corr2_flag = $corr2_flag/g" $rutainstancia
             sed -i "s/corr2_iformat = .*$/corr2_iformat = $corr2_iformat/g" $rutainstancia
