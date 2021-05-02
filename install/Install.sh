@@ -5,10 +5,13 @@ cd /home/pi/
 apt-get update -y
 
 # Install gfortran
-apt -y install gfortran
+apt install -y gfortran
 
 # Install xterm
-apt -y install xterm
+apt install -y xterm
+
+# Install gpsd
+apt install -y gpsd gpsd-clients python-gps
 
 # Install pyqt5
 apt-get install -y qt5-default pyqt5-dev pyqt5-dev-tools
