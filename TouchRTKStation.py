@@ -447,7 +447,7 @@ class MainWidget(QWidget):
             exe = MainWindow.dirrtk+'/RTKLIB/app/str2str/gcc/str2str'
             rcvcmd =' -c '+MainWindow.ubxcmd
             llhcmd =' -p '+MainWindow.basepos_lat+' '+MainWindow.basepos_lon+' '+MainWindow.basepos_hgt
-            rtcmcmd=' -msg "1004(1),1005(10),1008(10),1012(1),1019(1),1020(1),1077(1),1087(1),1097(1)"'
+            rtcmcmd=' -msg "1004(1),1005(10),1008(10),1012(1),1019(1),1020(1),1045(1),1077(1),1087(1),1097(1)"'
             opt = self.makeCommandBase()
             cmd = shlex.split(exe+opt+rcvcmd+llhcmd+rtcmcmd)
             main.p = Popen(cmd, stdin=PIPE, stderr=PIPE, bufsize=0)
