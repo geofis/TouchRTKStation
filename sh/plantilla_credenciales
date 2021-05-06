@@ -3,3 +3,9 @@ mp_rtk2go=
 corr_user_unavco=
 corr_pw_unavco=
 mp_unavco=
+corr_user_otro=
+corr_pw_otro=
+corr_addr_otro=
+corr_port_otro=
+mp_otro=
+

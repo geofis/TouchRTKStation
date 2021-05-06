@@ -49,6 +49,16 @@ corr_port_unavco=2101
 corr_pw_unavco=`if [ -f "$rutacredenciales" ]; then grep -oP 'corr_pw_unavco=\K\w+' $rutacredenciales; fi`
 corr_mp_unavco=`if [ -f "$rutacredenciales" ]; then grep -oP 'mp_unavco=\K\w+' $rutacredenciales; fi`
 
+# Para RTK Rover correcciones desde Otro
+basepos_itype_otro=1
+corr_flag_otro=True
+corr_iformat_otro=1
+corr_user_otro=`if [ -f "$rutacredenciales" ]; then grep -oP 'corr_user_otro=\K\w+' $rutacredenciales; fi`
+corr_addr_otro=`if [ -f "$rutacredenciales" ]; then grep -oP 'corr_addr_otro=\K\w+.*' $rutacredenciales; fi`
+corr_port_otro=`if [ -f "$rutacredenciales" ]; then grep -oP 'corr_port_otro=\K\w+' $rutacredenciales; fi`
+corr_pw_otro=`if [ -f "$rutacredenciales" ]; then grep -oP 'corr_pw_otro=\K\w+' $rutacredenciales; fi`
+corr_mp_otro=`if [ -f "$rutacredenciales" ]; then grep -oP 'mp_otro=\K\w+' $rutacredenciales; fi`
+
 # Para RTK Rover correcciones desde rtk2go
 basepos_itype_rtk2go=1
 corr_flag_rtk2go=True
@@ -71,7 +81,7 @@ optfile_enu='static_enu.conf'
 
 # Menú
 PS3='Elige tu opción: '
-options=("Generar posición de la base" "RTK Base a rtk2go" "RTK Base a telemetría" "RTK Base a telemetría y rtk2go" "RTK Rover correcciones desde UNAVCO" "RTK Rover correcciones desde rtk2go" "RTK Rover correcciones desde rtk2go ENU" "RTK Rover correcciones desde telemetría" "RTK Rover correcciones desde telemetría ENU" "Crear credenciales" "Fijar fecha/hora a partir de GPS" "Detener gpsd" "Salir")
+options=("Generar posición de la base" "RTK Base a rtk2go" "RTK Base a telemetría" "RTK Base a telemetría y rtk2go" "RTK Rover correcciones desde UNAVCO" "RTK Rover correcciones desde rtk2go" "RTK Rover correcciones desde rtk2go ENU" "RTK Rover correcciones desde telemetría" "RTK Rover correcciones desde telemetría ENU" "RTK Rover correcciones desde Otro" "Crear credenciales" "Fijar fecha/hora a partir de GPS" "Detener gpsd" "Salir")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -195,6 +205,21 @@ do
             sed -i "s/corr2_ibitrate = .*$/corr2_ibitrate = $corr2_ibitrate/g" $rutainstancia
             sed -i "s/optfile='static.conf'/optfile='$optfile_enu'/g" $rutainstancia
             sed -i "s/oformat.append('llh')/oformat.append('enu')/g" $rutainstancia
+            python3 $rutainstancia
+            break
+            ;;
+        "RTK Rover correcciones desde Otro")
+            echo "Seleccionado: $opt"
+            cp $rutascript $rutainstancia
+            sed -i "s/basepos_itype = .*$/basepos_itype = $basepos_itype_otro/g" $rutainstancia
+            sed -i "s/ubx_m8t_bds_raw_1hz.cmd/$cmd5hz/g" $rutainstancia
+            sed -i "s/corr_flag = .*$/corr_flag = $corr_flag_otro/g" $rutainstancia
+            sed -i "s/corr_iformat = .*$/corr_iformat = $corr_iformat_otro/g" $rutainstancia
+            sed -i "s/corr_user = .*$/corr_user = '$corr_user_otro'/g" $rutainstancia
+            sed -i "s/corr_addr = .*$/corr_addr = '$corr_addr_otro'/g" $rutainstancia
+            sed -i "s/corr_port = .*$/corr_port = '$corr_port_otro'/g" $rutainstancia
+            sed -i "s/corr_pw = .*$/corr_pw = '$corr_pw_otro'/g" $rutainstancia
+            sed -i "s/corr_mp = .*$/corr_mp = '$corr_mp_otro'/g" $rutainstancia
             python3 $rutainstancia
             break
             ;;
