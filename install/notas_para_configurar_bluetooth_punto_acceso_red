@@ -47,7 +47,7 @@ plugins=ifupdown,keyfile
 dhcp=internal
 
 [ifupdown]
-managed=true
+managed=false
 
 [device]
 wifi.scan-rand-mac-address=no
@@ -71,3 +71,5 @@ sudo usermod -G bluetooth -a pi
 # 9) En el teléfono, conectar con la RPi, o en la RPi conectar con el teléfono.
 
 # 10) Iniciar VNC, añadir la RPi si no lo está con la ruta 10.1.1.1
+
+# 11) Para conectar a redes WiFi en la RPi, usar el ícono del NetworkManager (luce como un cable de red al estar desconectado; conectado muestra las típicas barritas verticales de intensidad de señal)
